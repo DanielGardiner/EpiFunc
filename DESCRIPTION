@@ -1,0 +1,13 @@
+Package: EpiFunc
+Version: 0.0.0.9000
+Title: Epidemiology Functions
+Description: Package containing useful epidemiological functions.
+Authors@R: person("Daniel", "Gardiner", , "daniel.gardiner@phe.gov.uk", c("aut", "cre"))
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+RoxygenNote: 6.0.1
+Imports: 
+    scales,
+    ggplot2
