@@ -37,19 +37,19 @@
 #'
 #' tile_plot(data, x.col = "week", y.col = "geog", keep.row.order = TRUE)
 #'
-#' # example plot 1
+#' # example plot 2
 #'
 #' tile_plot(data, x.col = "week", y.col = "geog", keep.row.order = FALSE)
 #'
-#' # example plot 1
+#' # example plot 3
 #'
 #' tile_plot(data, x.col = "week", y.col = "geog", text = TRUE)
 #'
-#' # example plot 1
+#' # example plot 4
 #'
 #' tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2)
 #'
-#' # example plot 1
+#' # example plot 5
 #'
 #' tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2,
 #'           rescale.by.row = TRUE)
