@@ -1,4 +1,3 @@
-
 #' Create age-sex pyramid
 #'
 #' @import scales
@@ -6,7 +5,6 @@
 #' @author Daniel Gardiner (daniel.gardiner@phe.gov.uk)
 #'
 #' @param data a data.frame
-#'
 #' @param age.grp.col a character defining the age-group column within the data.frame
 #' @param sex.col a character defining the sex column within the data.frame
 #' @param lower.limit a numeric defining the lower limit for the x-axis
@@ -14,35 +12,10 @@
 #' @param split.by a character defining a column to facet by within the data.frame
 #' @param col.pal a numeric defining the colour palette to use
 #'
-#' @examples
-#' # set dummy data
-#' set.seed(5)
-#'
-#' data = data.frame(sex = sample(c("Male", "Female", "Unknown"), 200, replace = T),
-#'                   age = sample(c(NA, 1:100), 200, replace = T),
-#'                   status = sample(c("Confirmed", "Probable"), 200, replace = T))
-#'
-#' data$age.grp = cut(as.numeric(data$age), breaks = c(0, 6, 16, 26, 46, 66, Inf),
-#'                    include.lowest = T)
-#'
-#' # age sex pyramid
-#'
-#' age.sex.pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL)
-#'
-#' # age sex pyramid with lower/upper limit and colour palette
-#'
-#' age.sex.pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL,
-#'                 lower.limit = -50, upper.limit = 40, col.pal = 4)
-#'
-#' # age sex pyramid with facet
-#'
-#' age.sex.pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = "status")
-#'
-#'
 #'
 #' @return an age-sex pyramid
 #' @export
-age.sex.pyramid = function(data, age.grp.col, sex.col,
+age_sex_pyramid = function(data, age.grp.col, sex.col,
                            lower.limit = NULL, upper.limit = NULL,
                            split.by = NULL,
                            col.pal = 1) {
@@ -136,3 +109,28 @@ age.sex.pyramid = function(data, age.grp.col, sex.col,
   p
 
 }
+#' @examples
+#' # set dummy data
+#' set.seed(5)
+#'
+#' data = data.frame(sex = sample(c("Male", "Female", "Unknown"), 200, replace = TRUE),
+#'                   age = sample(c(NA, 1:100), 200, replace = TRUE),
+#'                   status = sample(c("Confirmed", "Probable"), 200, replace = TRUE))
+#'
+#' data$age.grp = cut(as.numeric(data$age), breaks = c(0, 6, 16, 26, 46, 66, Inf),
+#'                    include.lowest = TRUE)
+#'
+#' # age sex pyramid
+#'
+#' age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL)
+#'
+#' # age sex pyramid with lower/upper limit and colour palette
+#'
+#' age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL,
+#'                 lower.limit = -50, upper.limit = 40, col.pal = 4)
+#'
+#' # age sex pyramid with facet
+#'
+#' age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = "status")
+#'
+#'
