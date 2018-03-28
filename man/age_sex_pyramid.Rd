@@ -28,6 +28,30 @@ an age-sex pyramid
 \description{
 Create age-sex pyramid
 }
+\examples{
+# set dummy data
+set.seed(5)
+
+data = data.frame(sex = sample(c("Male", "Female", "Unknown"), 200, replace = TRUE),
+                  age = sample(c(NA, 1:100), 200, replace = TRUE),
+                  status = sample(c("Confirmed", "Probable"), 200, replace = TRUE))
+
+data$age.grp = cut(as.numeric(data$age), breaks = c(0, 6, 16, 26, 46, 66, Inf),
+                   include.lowest = TRUE)
+
+# age sex pyramid
+
+age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL)
+
+# age sex pyramid with lower/upper limit and colour palette
+
+age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL,
+                lower.limit = -50, upper.limit = 40, col.pal = 4)
+
+# age sex pyramid with facet
+
+age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = "status")
+}
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
 }

@@ -35,6 +35,37 @@ a tile plot
 \description{
 Tile plot
 }
+\examples{
+# create dummy data
+
+set.seed(3)
+
+data = data.frame(geog = sample(c("Vienna", "Vienna", "Vienna", "Vienna", "Salzburg", "Innsbruck", "Graz", "Graz", "Linz", "Klagenfurt", "Villach"), 5000, replace = TRUE),
+                  age.group = sample(c("0-19", "20-39", "40-59", "60+", "60+"), 5000, replace = TRUE),
+                  week = factor(sample(paste0("week.", 1:30), 5000, replace = TRUE),
+                                levels = paste0("week.", 1:30)))
+
+# example plot 1
+
+tile_plot(data, x.col = "week", y.col = "geog", keep.row.order = TRUE)
+
+# example plot 1
+
+tile_plot(data, x.col = "week", y.col = "geog", keep.row.order = FALSE)
+
+# example plot 1
+
+tile_plot(data, x.col = "week", y.col = "geog", text = TRUE)
+
+# example plot 1
+
+tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2)
+
+# example plot 1
+
+tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2,
+          rescale.by.row = TRUE)
+}
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
 }
