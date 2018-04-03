@@ -5,7 +5,7 @@
 \title{Tile plot}
 \usage{
 tile_plot(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
-  colour = "red", label.breaks = 0, rescale.by.row = FALSE,
+  colour = "red", angle = 0, label.breaks = 0, rescale.by.row = FALSE,
   keep.row.order = FALSE)
 }
 \arguments{
@@ -22,6 +22,8 @@ tile_plot(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
 \item{text}{a logical specifying if numeric values should be overlayed as text}
 
 \item{colour}{a character containing the colour for the tile plot}
+
+\item{angle}{a numeric to specify the x-axis label angel for the epicurve}
 
 \item{label.breaks}{a numeric specifying x-axis label breaks}
 

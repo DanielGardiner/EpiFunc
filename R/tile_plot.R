@@ -114,7 +114,7 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
   p = p + xlab(x.lab)
 
   p = p + theme(title = element_text(size = 16, colour = "black", face="bold"),
-                axis.text.x = element_text(angle = angle, hjust = 1, vjust = 0, size = 10,
+                axis.text.x = element_text(angle = angle, hjust = 0.5, vjust = 0, size = 10,
                                            colour = "black"),
                 axis.text.y = element_text(hjust = 1, size = 9,
                                            colour = "black"),

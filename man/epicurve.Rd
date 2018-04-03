@@ -7,7 +7,7 @@
 epicurve(x, date.col, time.period, fill.by = NULL, split.by = NULL,
   shade.by = NULL, start.at = NULL, stop.at = NULL, xlab = NULL,
   ylab = "Count", fill.by.legend.title = NULL,
-  shade.by.legend.title = NULL, angle = 45, col.pal = 1,
+  shade.by.legend.title = NULL, angle = 0, col.pal = 1,
   label.breaks = 0, epi.squares = TRUE, blank.background = FALSE,
   na.rm = FALSE)
 }
