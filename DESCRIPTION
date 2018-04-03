@@ -3,7 +3,7 @@ Version: 0.0.0.9000
 Title: Epidemiology Functions
 Description: Package containing useful epidemiological functions.
 Authors@R: person("Daniel", "Gardiner", , "daniel.gardiner@phe.gov.uk", c("aut", "cre"))
-License: GPL-3
+License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
@@ -12,4 +12,5 @@ Imports:
     scales,
     ggplot2,
     reshape2,
-    dplyr
+    dplyr,
+    ISOweek

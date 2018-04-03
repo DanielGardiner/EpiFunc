@@ -30,6 +30,7 @@ Create age-sex pyramid
 }
 \examples{
 # set dummy data
+
 set.seed(5)
 
 data = data.frame(sex = sample(c("Male", "Female", "Unknown"), 200, replace = TRUE),

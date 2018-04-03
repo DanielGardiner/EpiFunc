@@ -40,7 +40,9 @@ Tile plot
 
 set.seed(3)
 
-data = data.frame(geog = sample(c("Vienna", "Vienna", "Vienna", "Vienna", "Salzburg", "Innsbruck", "Graz", "Graz", "Linz", "Klagenfurt", "Villach"), 5000, replace = TRUE),
+data = data.frame(geog = sample(c("Vienna", "Vienna", "Vienna", "Vienna",
+                                  "Salzburg", "Innsbruck", "Graz", "Graz",
+                                  "Linz", "Klagenfurt", "Villach"), 5000, replace = TRUE),
                   age.group = sample(c("0-19", "20-39", "40-59", "60+", "60+"), 5000, replace = TRUE),
                   week = factor(sample(paste0("week.", 1:30), 5000, replace = TRUE),
                                 levels = paste0("week.", 1:30)))
@@ -49,19 +51,19 @@ data = data.frame(geog = sample(c("Vienna", "Vienna", "Vienna", "Vienna", "Salzb
 
 tile_plot(data, x.col = "week", y.col = "geog", keep.row.order = TRUE)
 
-# example plot 1
+# example plot 2
 
 tile_plot(data, x.col = "week", y.col = "geog", keep.row.order = FALSE)
 
-# example plot 1
+# example plot 3
 
 tile_plot(data, x.col = "week", y.col = "geog", text = TRUE)
 
-# example plot 1
+# example plot 4
 
 tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2)
 
-# example plot 1
+# example plot 5
 
 tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2,
           rescale.by.row = TRUE)

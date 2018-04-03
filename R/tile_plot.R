@@ -4,6 +4,7 @@
 #' @import reshape2
 #' @import scales
 #' @import dplyr
+#' @importFrom stats xtabs
 #'
 #' @author Daniel Gardiner (daniel.gardiner@phe.gov.uk)
 #'
@@ -28,7 +29,9 @@
 #'
 #' set.seed(3)
 #'
-#' data = data.frame(geog = sample(c("Vienna", "Vienna", "Vienna", "Vienna", "Salzburg", "Innsbruck", "Graz", "Graz", "Linz", "Klagenfurt", "Villach"), 5000, replace = TRUE),
+#' data = data.frame(geog = sample(c("Vienna", "Vienna", "Vienna", "Vienna",
+#'                                   "Salzburg", "Innsbruck", "Graz", "Graz",
+#'                                   "Linz", "Klagenfurt", "Villach"), 5000, replace = TRUE),
 #'                   age.group = sample(c("0-19", "20-39", "40-59", "60+", "60+"), 5000, replace = TRUE),
 #'                   week = factor(sample(paste0("week.", 1:30), 5000, replace = TRUE),
 #'                                 levels = paste0("week.", 1:30)))
@@ -57,7 +60,6 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
                      colour = "red", label.breaks = 0, rescale.by.row = FALSE,
                      keep.row.order = FALSE){
 
-
   # convert to data frame
 
   data = as.data.frame(data)
@@ -68,12 +70,10 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
 
   data$x = data[, x.col]
 
-
-  # tabulate cases by laboratory by week
+  # tabulate cases  x by y
 
   temp = as.data.frame.array(xtabs(~ y + x, data,
                                    drop.unused.levels = FALSE))
-
 
   # order data
 
@@ -82,8 +82,6 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
   } else {
     temp = temp[order(apply(temp, 1, sum)), ]
   }
-
-
 
   # add y column
 
@@ -102,8 +100,7 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
 
   if(rescale.by.row)  temp = temp %>% group_by(y) %>% mutate(rescale = rescale(value))
 
-
-  # plot temp2
+  # plot temp
 
   p = ggplot(temp, aes(x = variable, y = y, size = rescale, fill = rescale))
 
@@ -135,7 +132,6 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
                            drop=FALSE)
 
   p = p + theme(legend.position="none")
-
 
   p
 
