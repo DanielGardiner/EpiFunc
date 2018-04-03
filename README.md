@@ -60,7 +60,6 @@ epicurve(data, date.col = "dates", time.period = "month",
 ```
 
 <img src="man/figures/epicurve1.png" />
-<img src="man/figures/epicurve1.png" width="600" height="400"/>
 
 
 ```{r, eval = FALSE}

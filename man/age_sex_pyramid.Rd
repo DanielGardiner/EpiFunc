@@ -5,7 +5,8 @@
 \title{Create age-sex pyramid}
 \usage{
 age_sex_pyramid(data, age.grp.col, sex.col, lower.limit = NULL,
-  upper.limit = NULL, split.by = NULL, col.pal = 1)
+  upper.limit = NULL, split.by = NULL, col.pal = 1,
+  blank.background = FALSE)
 }
 \arguments{
 \item{data}{a data.frame}
@@ -21,6 +22,8 @@ age_sex_pyramid(data, age.grp.col, sex.col, lower.limit = NULL,
 \item{split.by}{a character defining a column to facet by within the data.frame}
 
 \item{col.pal}{a numeric defining the colour palette to use}
+
+\item{blank.background}{a logical  specifying if the figure background should be blank}
 }
 \value{
 an age-sex pyramid
