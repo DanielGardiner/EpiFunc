@@ -1,23 +1,19 @@
----
-output: github_document
----
-
 # EpiFunc
 
 
 ## Overview
 
-EpiFunc is a collection of functions which output simnple epidemilogical visualisations. 
+EpiFunc is a collection of functions which output simple epidemilogical visualisations. 
 
 
 ## Installation
 
 ```{r, eval = FALSE}
-# You can install by typing:
+# You can install EpiFunc using:
 
 devtools::install_github("DanielGardiner/EpiFunc")
 
-# If you have issues with permissions try typing:
+# If you have issues with permissions try using:
 
 install.packages("httr")
 
@@ -31,6 +27,9 @@ devtools::install_github("DanielGardiner/EpiFunc")
 
 
 ```{r, eval = FALSE}
+
+library(EpiFunc)
+
 # set dummy data
 
 set.seed(5)
@@ -50,15 +49,37 @@ data$month = format(data$dates, "%m")
 
 # plot epicurve
 
-EpiFunc::epicurve(data, date.col = "dates", time.period = "month",
-                  fill.by="sex", split.by="conf", shade.by=NULL,
-                  start.at = "2014-01-01", stop.at = "2016-04-20",
-                  xlab="Month", ylab="Count",
-                  fill.by.legend.title = NULL, shade.by.legend.title = NULL, 
-                  angle=0, col.pal=7, label.breaks = 0, epi.squares = TRUE, 
-                  blank.background = TRUE, na.rm = TRUE) 
+epicurve(data, date.col = "dates", time.period = "month",
+         fill.by="sex", split.by="conf", shade.by=NULL,
+         start.at = "2014-01-01", stop.at = "2016-04-20",
+         xlab="Month", ylab="Count",
+         fill.by.legend.title = NULL, shade.by.legend.title = NULL, 
+         angle=0, col.pal=7, label.breaks = 0, epi.squares = TRUE, 
+         blank.background = TRUE, na.rm = TRUE) 
+
 ```
 
+<img src="man/figures/epicurve1.png" />
 <img src="man/figures/epicurve1.png" width="600" height="400"/>
+
+
+```{r, eval = FALSE}
+
+age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", 
+                split.by = "conf", col.pal = "phe", 
+                blank.background = TRUE)
+
+```
+
+<img src="man/figures/agesexpyramid1.png" />
+
+```{r, eval = FALSE}
+
+tile_plot(data, x.col = "month", y.col = "geog", text = TRUE, 
+          x.lab = "Month", y.lab = "Geography", keep.row.order = FALSE)
+
+```
+
+<img src="man/figures/tileplot1.png" />
 
 
