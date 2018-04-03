@@ -110,15 +110,7 @@ epicurve = function(x, date.col, time.period, fill.by=NULL, split.by=NULL, shade
                     angle=45, col.pal=1, label.breaks =0, epi.squares = TRUE,
                     blank.background = FALSE, na.rm = FALSE) {
 
-  # handle arguments
-
-  if(!is.null(fill.by) && is.numeric(fill.by)) fill.by = names(x)[fill.by]
-
-  if(!is.null(split.by) && is.numeric(split.by)) split.by = names(x)[split.by]
-
-  if(!is.null(shade.by) && is.numeric(shade.by)) shade.by = names(x)[shade.by]
-
-  if(!is.null(col.pal) && col.pal==0) col.pal = NULL # 0 will be the default palette
+  # make sure x is a data.frame
 
   x = as.data.frame(x)
 
