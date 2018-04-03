@@ -107,12 +107,14 @@
 epicurve = function(x, date.col, time.period, fill.by=NULL, split.by=NULL, shade.by=NULL,
                     start.at=NULL, stop.at=NULL, xlab=NULL, ylab="Count",
                     fill.by.legend.title = NULL, shade.by.legend.title = NULL,
-                    angle=45, col.pal=1, label.breaks =0, epi.squares = TRUE,
+                    angle=0, col.pal=1, label.breaks =0, epi.squares = TRUE,
                     blank.background = FALSE, na.rm = FALSE) {
 
   # make sure x is a data.frame
 
   x = as.data.frame(x)
+
+  # check values supplied to col.pal and time.period arguments
 
   if(!(col.pal == "phe" | (col.pal >= 0 & col.pal <= 8))) {
 

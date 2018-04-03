@@ -15,6 +15,7 @@
 #' @param y.lab a character containing the label for the y-axis
 #' @param text a logical specifying if numeric values should be overlayed as text
 #' @param colour a character containing the colour for the tile plot
+#' @param angle a numeric to specify the x-axis label angel for the epicurve
 #' @param label.breaks a numeric specifying x-axis label breaks
 #' @param rescale.by.row a logical specifying if the colours on the tile plot should be relative to all tiles or relative to other tiles within a single row
 #' @param keep.row.order a logical specifying if the order of the rows should be kept as is or changed to most common
@@ -57,7 +58,7 @@
 #' tile_plot(data, x.col = "week", y.col = "geog", text = TRUE, label.breaks = 2,
 #'           rescale.by.row = TRUE)
 tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
-                     colour = "red", label.breaks = 0, rescale.by.row = FALSE,
+                     colour = "red", angle=0, label.breaks = 0, rescale.by.row = FALSE,
                      keep.row.order = FALSE){
 
   # convert to data frame
@@ -113,7 +114,7 @@ tile_plot = function(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
   p = p + xlab(x.lab)
 
   p = p + theme(title = element_text(size = 16, colour = "black", face="bold"),
-                axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0, size = 10,
+                axis.text.x = element_text(angle = angle, hjust = 1, vjust = 0, size = 10,
                                            colour = "black"),
                 axis.text.y = element_text(hjust = 1, size = 9,
                                            colour = "black"),

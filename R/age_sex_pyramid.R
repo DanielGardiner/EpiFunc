@@ -11,7 +11,7 @@
 #' @param upper.limit a numeric defining the upper limit for the x-axis
 #' @param split.by a character defining a column to facet by within the data.frame
 #' @param col.pal a numeric defining the colour palette to use
-#'
+#' @param blank.background a logical  specifying if the figure background should be blank
 #'
 #' @return an age-sex pyramid
 #' @export
@@ -43,12 +43,22 @@
 age_sex_pyramid = function(data, age.grp.col, sex.col,
                            lower.limit = NULL, upper.limit = NULL,
                            split.by = NULL,
-                           col.pal = 1) {
+                           col.pal = 1, blank.background = FALSE) {
 
 
   # make sure data is a data.frame
 
   data = as.data.frame(data)
+
+  # check values supplied to col.pal and time.period arguments
+
+  if(!(col.pal == "phe" | (col.pal >= 0 & col.pal <= 8))) {
+
+    col.pal = "phe"
+
+    warning("col.pal must either be an integer from 1 to 8 or 'phe',
+            setting col.pal='phe'")
+  }
 
   # assign age.grp and sex columns within the function
 
@@ -110,7 +120,25 @@ age_sex_pyramid = function(data, age.grp.col, sex.col,
 
   p = p + coord_flip()
 
-  p = p + scale_fill_brewer("Sex", type = "qual", palette = col.pal)
+  # add the phe colour palette or a generic colour palette
+
+  if(col.pal == "phe"){
+
+    phe.cols = c("#822433", "#00B092", "#002776", "#EAAB00", "#8CB8C6",
+                 "#E9994A",  "#00A551", "#A4AEB5", "#00549F", "#DAD7CB")
+
+    p = p + scale_fill_manual(values = phe.cols, drop = FALSE)
+
+  } else if(!is.null(col.pal)){
+
+    p = p + scale_fill_brewer(type = "qual",
+                              palette = col.pal, drop = FALSE)
+
+  } else {
+
+    NULL
+
+  }
 
   p = p + xlab("Age group")
 
@@ -130,6 +158,19 @@ age_sex_pyramid = function(data, age.grp.col, sex.col,
 
   if(!is.null(split.by)) p = p + facet_grid("split.by~.",
                                             drop = FALSE)
+
+  # remove background if specified in blank.background argument
+
+  if(blank.background){
+
+    p = p + theme(panel.background = element_blank())
+
+  } else {
+
+    NULL
+
+  }
+
 
   p
 
