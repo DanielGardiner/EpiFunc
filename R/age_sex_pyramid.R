@@ -25,7 +25,7 @@
 #'                   age = sample(c(NA, 1:100), 200, replace = TRUE),
 #'                   status = sample(c("Confirmed", "Probable"), 200, replace = TRUE))
 #'
-#' data$age.grp = cut(as.numeric(data$age), breaks = c(0, 6, 16, 26, 46, 66, Inf),
+#' data$age.grp = cut(as.numeric(data$age), breaks = c(0, 5, 15, 25, 45, 65, Inf),
 #'                    include.lowest = TRUE)
 #'
 #' # age sex pyramid
