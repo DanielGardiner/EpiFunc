@@ -3,7 +3,7 @@
 
 ## Overview
 
-EpiFunc is a collection of functions which output simple epidemilogical visualisations. 
+EpiFunc is a collection of functions which can be used to perform common tasks when conducting an epidemilogical analysis. 
 
 
 ## Installation
@@ -23,7 +23,7 @@ devtools::install_github("DanielGardiner/EpiFunc")
 
 ```
 
-## Examples 
+## visualisation examples 
 
 
 ```{r, eval = FALSE}

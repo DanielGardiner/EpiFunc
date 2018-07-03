@@ -171,6 +171,6 @@ age_sex_pyramid = function(data, age.grp.col, sex.col,
 
   }
 
-  p
+  return(p)
 
 }
