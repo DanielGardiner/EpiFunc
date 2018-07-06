@@ -204,7 +204,7 @@ epicurve = function(x, date.col, time.period, fill.by=NULL, split.by=NULL, shade
 
     ## REMOVE MISSING DATES ##
 
-    cat(paste(sum(is.na(x$date.col.temp)), "rows have missing dates OR dates outside of the start/stop period"))
+    message(paste(sum(is.na(x$date.col.temp)), "rows have missing dates OR dates outside of the start/stop period"))
 
     if(na.rm) x = x[!is.na(x$date.col.temp), ]
 
