@@ -1,17 +1,11 @@
-#' Set values to NA
+#' Set NAs to a value
 #'
 #' @import tidyverse
 #' @author Daniel Gardiner (daniel.gardiner@phe.gov.uk)
 #'
 #' @param data a data.frame
-#' @param values.to.set.to.na a character vector specifying values to set to NA
-#'
-#' @return a dataframe with specified values set to NA
-#'
+#' @param value.to.set.na.to a character vector specifying the value to set NA to
 #' @export
-#'
-#' @description This function takes a data.frame and sets specified values to NA
-#'
 #' @examples
 #' # set dummy data
 #'
@@ -26,14 +20,23 @@
 #'
 #' # apply function
 #'
-#' set_to_na(data, c("Male", "Student"))
-set_to_na = function(data, values.to.set.to.na){
+#' set_na_to(data, c("Unknown"))
+set_na_to = function(data, value.to.set.na.to){
   data %>%
-    lapply(function(x)
-      replace(x, tolower(x) %in% tolower(values.to.set.to.na), NA)) %>%
+    lapply(function(x){
+      if(class(x) == "character"){
+        replace(x, is.na(x), value.to.set.na.to)
+      } else if(class(x) == "factor" & any(is.na(x))){
+        temp = levels(x)
+        x = as.character(x)
+        x = replace(x, is.na(x), value.to.set.na.to)
+        x = factor(x, c(temp, value.to.set.na.to))
+        x
+      } else {
+        x
+      }
+    }) %>%
     as_tibble()
 }
-
-
 
 
