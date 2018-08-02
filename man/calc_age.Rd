@@ -20,23 +20,23 @@ a data.frame containing a column of ages in years and a column of age groups
 Calculate ages in years and age groups
 }
 \examples{
-# # set dummy data
-#
+# set dummy data
+
 # set.seed(2)
-#
-# data = data.frame(date.of.birth = sample(seq(as.Date('1900-01-01'), as.Date('1990-12-31'), by="day"), 30, replace = TRUE),
-#                   onset.date = sample(seq(as.Date('1991-01-01'), as.Date('2010-12-31'), by="day"), 30, replace = TRUE))
-#
-#  # use function
-#
-# calc_age(dob = data$date.of.birth,
-#          ref.date = data$onset.date)
-#
-# # append results of function onto original data
-#
-# cbind(data, calc_age(dob = data$date.of.birth,
-#                      ref.date = data$onset.date,
-#                      breaks = c(0, 10, 20, 30, 40, 50, 60, Inf)))
+
+data = data.frame(date.of.birth = sample(seq(as.Date('1900-01-01'), as.Date('1990-12-31'), by="day"), 30, replace = TRUE),
+                  onset.date = sample(seq(as.Date('1991-01-01'), as.Date('2010-12-31'), by="day"), 30, replace = TRUE))
+
+# use function
+
+calc_age(dob = data$date.of.birth,
+         ref.date = data$onset.date)
+
+# append results of function onto original data
+
+cbind(data, calc_age(dob = data$date.of.birth,
+                     ref.date = data$onset.date,
+                     breaks = c(0, 10, 20, 30, 40, 50, 60, Inf)))
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
