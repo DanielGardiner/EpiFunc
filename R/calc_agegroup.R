@@ -8,10 +8,9 @@
 #' @return a factor vector containing age groups in years
 #' @export
 #' @examples
-#'
 #' # set dummy data
 #'
-#' # set.seed(2)
+#' set.seed(2)
 #'
 #' age = sample(0:120, 30, replace = TRUE)
 #'
