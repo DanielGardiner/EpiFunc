@@ -5,8 +5,8 @@
 \title{Tile plot}
 \usage{
 tile_plot(data, x.col, y.col, x.lab = "", y.lab = "", text = FALSE,
-  colour = "red", angle = 0, label.breaks = 0, rescale.by.row = FALSE,
-  keep.row.order = FALSE)
+  colour = "red", angle = 0, label.breaks = 0,
+  rescale.by.row = FALSE, keep.row.order = FALSE)
 }
 \arguments{
 \item{data}{a data frame}

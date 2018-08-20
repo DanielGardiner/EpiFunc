@@ -4,8 +4,8 @@
 \alias{tab_1var}
 \title{Tabulate 1 variable}
 \usage{
-tab_1var(data, var = NULL, complete = FALSE, arrange.factor.by = "value",
-  show.percentage = TRUE)
+tab_1var(data, var = NULL, complete = FALSE,
+  arrange.factor.by = "value", show.percentage = TRUE)
 }
 \arguments{
 \item{data}{a data.frame}
