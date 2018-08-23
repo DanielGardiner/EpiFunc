@@ -18,7 +18,7 @@ tab_2vars(data, row.var = NULL, col.var = NULL, complete = TRUE,
 
 \item{include.col.total}{a logical specifying whether to include column totals}
 
-\item{cols.var}{a character specifying the variable to tabulate along columns, if set to NULL the first variable will be used}
+\item{cols.var}{a character specifying the variable to tabulate along columns, if set to NULL the second variable will be used}
 }
 \description{
 Tabulate 2 variables

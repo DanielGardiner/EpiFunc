@@ -2,22 +2,20 @@
 % Please edit documentation in R/calc_age.R
 \name{calc_age}
 \alias{calc_age}
-\title{Calculate ages in years and age groups}
+\title{Calculate age in years}
 \usage{
-calc_age(dob, ref.date, breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, Inf))
+calc_age(dob, ref.date)
 }
 \arguments{
 \item{dob}{a vector of dates (should be date of births)}
 
 \item{ref.date}{a vector of dates (should be the reference date to calculate age)}
-
-\item{breaks}{a numeric vector defining break points for age groups (the final value must be infinite)}
 }
 \value{
-a data.frame containing a column of ages in years and a column of age groups
+a numeric vector containing age in years
 }
 \description{
-Calculate ages in years and age groups
+Calculate age in years
 }
 \examples{
 # set dummy data
@@ -31,12 +29,6 @@ data = data.frame(date.of.birth = sample(seq(as.Date('1900-01-01'), as.Date('199
 
 calc_age(dob = data$date.of.birth,
          ref.date = data$onset.date)
-
-# append results of function onto original data
-
-cbind(data, calc_age(dob = data$date.of.birth,
-                     ref.date = data$onset.date,
-                     breaks = c(0, 10, 20, 30, 40, 50, 60, Inf)))
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
