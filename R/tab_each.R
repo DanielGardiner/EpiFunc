@@ -37,7 +37,8 @@ tab_each = function(data,
                     row.break.value = ".",
                     complete = FALSE,
                     arrange.factor.by = "value",
-                    show.percentage = TRUE){
+                    show.percentage = TRUE,
+                    n.decimals = 0){
 
   # convert to data.frame
 
@@ -72,7 +73,7 @@ tab_each = function(data,
 
     x = data %>%
       tab_1var(vars[i], complete,
-               arrange.factor.by, show.percentage) %>%
+               arrange.factor.by, show.percentage, n.decimals) %>%
       mutate(.variable = vars[i],
              .variable = ifelse(duplicated(.variable), "", .variable),
              .type = class(data[, vars[i]])[1],

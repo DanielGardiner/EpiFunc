@@ -32,12 +32,7 @@
 #'   tab_1var()
 tab_1var = function(data, var = NULL, complete = FALSE,
                     arrange.factor.by = "value",
-                    show.percentage = TRUE){
-
-  # load packages
-
-  library(tidyverse)
-  library(stringr)
+                    show.percentage = TRUE, n.decimals = 0){
 
   # check arguments are valid
 
@@ -78,7 +73,7 @@ tab_1var = function(data, var = NULL, complete = FALSE,
     if(show.percentage){
 
       temp = temp %>%
-        mutate(value = paste0(Freq, " (", sprintf("%.0f", round(100*Freq/sum(Freq), 0)), "%)"))
+        mutate(value = paste0(Freq, " (", n_decimals(100*Freq/sum(Freq), n = n.decimals), "%)"))
 
       colnames(temp) = c(var, "Freq", "n (%)")
 
@@ -146,7 +141,7 @@ tab_1var = function(data, var = NULL, complete = FALSE,
     if(show.percentage){
 
       temp = temp %>%
-        mutate(`n (%)` = paste0(Freq, " (", sprintf("%.0f", round(100*Freq/sum(Freq), 0)), "%)")) %>%
+        mutate(`n (%)` = paste0(Freq, " (", n_decimals(100*Freq/sum(Freq), n = n.decimals), "%)")) %>%
         select(-Freq)
 
     } else {
@@ -192,10 +187,10 @@ tab_1var = function(data, var = NULL, complete = FALSE,
 
     temp = data.frame(n.valid = sum(!is.na(x)),
                       n.NA = sum(is.na(x)),
-                      Min = sprintf("%.1f", round(min(x, na.rm = TRUE), 1)),
-                      Median = sprintf("%.1f", round(median(x, na.rm = TRUE), 1)),
-                      Mean = sprintf("%.1f", round(mean(x, na.rm = TRUE), 1)),
-                      Max = sprintf("%.1f", round(max(x, na.rm = TRUE), 1))) %>%
+                      Min = n_decimals(min(x), n = 1),
+                      Median = n_decimals(median(x), n = 1),
+                      Mean = n_decimals(mean(x), n = 1),
+                      Max = n_decimals(max(x), n = 1)) %>%
       t() %>%
       as.data.frame() %>%
       rownames_to_column()
