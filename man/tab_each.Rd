@@ -4,9 +4,9 @@
 \alias{tab_each}
 \title{Tabulate each variable separately}
 \usage{
-tab_each(data, cols = NULL, trunc.length = NULL,
-  row.break.value = ".", complete = FALSE,
-  arrange.factor.by = "value", show.percentage = TRUE)
+tab_each(data, cols = NULL, trunc.length = NULL, row.break.value = ".",
+  complete = FALSE, arrange.factor.by = "value", show.percentage = TRUE,
+  n.decimals = 0)
 }
 \arguments{
 \item{data}{a data.frame}
