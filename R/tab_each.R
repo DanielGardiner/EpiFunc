@@ -38,7 +38,8 @@ tab_each = function(data,
                     complete = FALSE,
                     arrange.factor.by = "value",
                     show.percentage = TRUE,
-                    n.decimals = 0){
+                    n.decimals = 0,
+                    include.na.percentage = TRUE){
 
   # convert to data.frame
 
@@ -72,8 +73,12 @@ tab_each = function(data,
     # apply tab_1var function amd add variable and type columns
 
     x = data %>%
-      tab_1var(vars[i], complete,
-               arrange.factor.by, show.percentage, n.decimals) %>%
+      tab_1var(vars[i],
+               complete,
+               arrange.factor.by,
+               show.percentage,
+               n.decimals,
+               include.na.percentage) %>%
       mutate(.variable = vars[i],
              .variable = ifelse(duplicated(.variable), "", .variable),
              .type = class(data[, vars[i]])[1],
@@ -114,3 +119,4 @@ tab_each = function(data,
   temp
 
 }
+

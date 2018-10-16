@@ -6,7 +6,7 @@
 \usage{
 tab_each(data, cols = NULL, trunc.length = NULL, row.break.value = ".",
   complete = FALSE, arrange.factor.by = "value", show.percentage = TRUE,
-  n.decimals = 0)
+  n.decimals = 0, include.na.percentage = TRUE)
 }
 \arguments{
 \item{data}{a data.frame}

@@ -5,7 +5,7 @@
 \title{Tabulate 1 variable}
 \usage{
 tab_1var(data, var = NULL, complete = FALSE, arrange.factor.by = "value",
-  show.percentage = TRUE, n.decimals = 0)
+  show.percentage = TRUE, n.decimals = 0, include.na.percentage = TRUE)
 }
 \arguments{
 \item{data}{a data.frame}

@@ -30,9 +30,13 @@
 #' data %>%
 #' select(sex) %>%
 #'   tab_1var()
-tab_1var = function(data, var = NULL, complete = FALSE,
+tab_1var = function(data,
+                    var = NULL,
+                    complete = FALSE,
                     arrange.factor.by = "value",
-                    show.percentage = TRUE, n.decimals = 0){
+                    show.percentage = TRUE,
+                    n.decimals = 0,
+                    include.na.percentage = TRUE){
 
   # check arguments are valid
 
@@ -63,17 +67,33 @@ tab_1var = function(data, var = NULL, complete = FALSE,
 
   x = data[, var]
 
-
   if(is.factor(x) | is.character(x)){
 
     temp = x %>%
       table(exclude = FALSE) %>%
       data.frame()
 
+
     if(show.percentage){
 
-      temp = temp %>%
-        mutate(value = paste0(Freq, " (", n_decimals(100*Freq/sum(Freq), n = n.decimals), "%)"))
+      if(include.na.percentage){
+
+        temp = temp %>%
+          mutate(value = paste0(Freq, " (", n_decimals(100*Freq/sum(Freq), n = n.decimals), "%)"))
+
+      } else {
+
+        temp = temp %>%
+          mutate(non.na.Freq = ifelse(is.na(.),
+                                      0,
+                                      Freq),
+                 value = ifelse(is.na(.),
+                                paste0(Freq, " (-)"),
+                                paste0(Freq, " (", n_decimals(100*Freq/sum(non.na.Freq),
+                                                              n = n.decimals), "%)"))) %>%
+          select(-non.na.Freq)
+
+      }
 
       colnames(temp) = c(var, "Freq", "n (%)")
 
@@ -136,7 +156,7 @@ tab_1var = function(data, var = NULL, complete = FALSE,
       table(exclude = FALSE) %>%
       data.frame()
 
-    temp[, 1] = str_replace(temp[, 1], "\\.", "")
+    temp[, 1] = str_replace(temp[, 1], "\\\\.", "")
 
     if(show.percentage){
 
