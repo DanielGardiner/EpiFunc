@@ -36,7 +36,8 @@ tab_1var = function(data,
                     arrange.factor.by = "value",
                     show.percentage = TRUE,
                     n.decimals = 0,
-                    include.na.percentage = TRUE){
+                    include.na.percentage = TRUE,
+                    include.total = TRUE){
 
   # check arguments are valid
 
@@ -144,6 +145,25 @@ tab_1var = function(data,
 
     temp = temp %>%
       select(-Freq)
+
+    if(include.total){
+
+      total = data.frame(v1 = ".Total") %>%
+        mutate(v2 = sum(as.numeric(str_split(temp[, 2], " ", simplify = TRUE)[, 1]),
+                        na.rm = TRUE)) %>%
+        mutate(v2 = ifelse(colnames(temp)[2] == "n (%)",
+                           paste0(v2, " (", n_decimals(100, n.decimals), "%)"),
+                           v2))
+
+      colnames(total) = colnames(temp)
+
+      temp = rbind(temp, total)
+
+    } else {
+
+      NULL
+
+    }
 
   } else if(is.logical(x)){
 
