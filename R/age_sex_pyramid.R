@@ -2,7 +2,7 @@
 #'
 #' @import scales
 #' @import ggplot2
-#' @author Daniel Gardiner (daniel.gardiner@phe.gov.uk)
+#' @author Daniel Gardiner (daniel.gardiner@@phe.gov.uk)
 #'
 #' @param data a data.frame
 #' @param age.grp.col a character defining the age-group column within the data.frame
@@ -14,7 +14,6 @@
 #' @param blank.background a logical  specifying if the figure background should be blank
 #'
 #' @return an age-sex pyramid
-#' @export
 #'
 #' @examples
 #' # set dummy data
@@ -40,137 +39,140 @@
 #' # age sex pyramid with facet
 #'
 #' age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = "status")
-age_sex_pyramid = function(data, age.grp.col, sex.col,
+#' 
+#' @export
+age_sex_pyramid <- function(data, age.grp.col, sex.col,
                            lower.limit = NULL, upper.limit = NULL,
                            split.by = NULL,
                            col.pal = 1, blank.background = FALSE) {
-
-
+  
+  
   # make sure data is a data.frame
-
+  
   data = as.data.frame(data)
-
+  
   # check values supplied to col.pal and time.period arguments
-
-  if(!(col.pal == "phe" | (col.pal >= 0 & col.pal <= 8))) {
-
+  
+  if (!(col.pal == "phe" | (col.pal >= 0 & col.pal <= 8))) {
+    
     col.pal = "phe"
-
+    
     warning("col.pal must either be an integer from 1 to 8 or 'phe',
             setting col.pal='phe'")
   }
-
+  
   # assign age.grp and sex columns within the function
-
+  
   data$age.grp = data[, age.grp.col]
-
+  
   data$sex = data[, sex.col]
-
+  
   data$split.by = data[, split.by]
-
-  if(is.null(split.by)) data$split.by = "dummy"
-
+  
+  if (is.null(split.by)) data$split.by = "dummy"
+  
   # format sex column
-
+  
   data$sex = as.character(data$sex)
-
-  data$sex[grep("^M", toupper(data$sex))] = "Male"
-
+  
   data$sex[grep("^F", toupper(data$sex))] = "Female"
-
-  data = data[!is.na(data$sex) & data$sex %in% c("Male", "Female"), ]
-
-  data$sex = factor(data$sex,
-                    levels = c("Male", "Female"))
-
-
+  
+  data$sex[grep("^M", toupper(data$sex))] = "Male"
+  
+  data = data[!is.na(data$sex) & data$sex %in% c("Female", "Male"), ]
+  
+  data$sex = factor(data$sex, levels = c("Female", "Male"))
+  
+  
   # make table of age.grp vs sex
-
-  table.to.plot = as.data.frame(xtabs(~ age.grp + sex + split.by,
-                                      data))
-
+  
+  table.to.plot = as.data.frame(xtabs(~ age.grp + sex + split.by, data))
+  
   # create axis limits to ensure vertical symmetry (using additional 10%)
-
-  if(is.null(lower.limit)) lower.limit = round(-max(table.to.plot$Freq)*1.1, 0)
-
-  if(is.null(upper.limit)) upper.limit = round(max(table.to.plot$Freq)*1.1, 0)
-
+  
+  if (is.null(lower.limit)) lower.limit = round(-max(table.to.plot$Freq)*1.1, 0)
+  
+  if (is.null(upper.limit)) upper.limit = round(max(table.to.plot$Freq)*1.1, 0)
+  
   temp.limits = c(lower.limit, upper.limit)
-
+  
   # create pretty breaks
-
+  
   temp.breaks = pretty(temp.limits)
-
+  
   # plot data
-
+  
   p = ggplot(data = table.to.plot,
              aes(x = age.grp, y = Freq, fill = sex))
-
-
-  p = p + geom_bar(data = subset(table.to.plot, sex=="Female"),
+  
+  
+  p = p + geom_bar(data = subset(table.to.plot, sex == "Male"), 
                    stat = "identity", colour = "black")
-
-  p = p + geom_bar(data = subset(table.to.plot, sex=="Male"),
+  
+  p = p + geom_bar(data = subset(table.to.plot, sex == "Female"), 
                    stat = "identity",
                    position = "identity",
                    mapping = aes(y = -Freq), colour = "black")
-
-
+  
+  
   p = p + scale_y_continuous(labels = abs, limits = temp.limits, breaks = temp.breaks)
-
+  
   p = p + coord_flip()
-
+  
   # add the phe colour palette or a generic colour palette
-
-  if(col.pal == "phe"){
-
+  
+  if (col.pal == "phe") {
+    
     phe.cols = c("#822433", "#00B092", "#002776", "#EAAB00", "#8CB8C6",
                  "#E9994A",  "#00A551", "#A4AEB5", "#00549F", "#DAD7CB")
-
+    
     p = p + scale_fill_manual(values = phe.cols, drop = FALSE)
-
-  } else if(!is.null(col.pal)){
-
+    
+  } else if (!is.null(col.pal)) {
+    
     p = p + scale_fill_brewer(type = "qual",
                               palette = col.pal, drop = FALSE)
-
+    
   } else {
-
+    
     NULL
-
+    
   }
-
-  p = p + xlab("Age group")
-
-  p = p + ylab("count")
-
-  p = p + theme(title = element_text(size = 16, colour = "black", face="bold"),
-                axis.text.x = element_text(angle = 0, hjust = 1, size = 16,
-                                           colour = "black"),
-                axis.text.y = element_text(hjust = 1, size = 16,
-                                           colour = "black"),
-                legend.text= element_text(hjust = 1, size = 16,
-                                          colour = "black", face="bold"),
-                axis.title = element_text(size=16, face="bold"),
-                strip.text.y = element_text(hjust = 1, size = 16,
-                                            colour = "black", face="bold"),
-                legend.position="bottom")
-
-  if(!is.null(split.by)) p = p + facet_grid("split.by~.",
-                                            drop = FALSE)
-
+  
+  p = p + xlab("Age group (years)")
+  
+  p = p + ylab("Number of cases")
+  
+  p = p + guides(fill = guide_legend(title = "Sex"))
+  
+  p = p + theme(title = element_text(size = 16, colour = "black", face = "bold"),
+                axis.title.x = element_text(size = 13, face = "bold", margin = margin(t = 20, r = 0, b = 0, l = 0)),
+                axis.title.y = element_text(size = 13, face = "bold", margin = margin(t = 0, r = 20, b = 0, l = 0)),
+                axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0, size = 11, face = "plain", colour = "black"),
+                axis.text.y = element_text(hjust = 0, vjust = 0.5, size = 11, face = "plain", colour = "black"),
+                legend.title = element_text(size = 11, face = "bold", colour = "black"),
+                legend.text = element_text(hjust = 1, size = 11, face = "plain", colour = "black"),
+                legend.position = "right",
+                legend.justification = c(0.018,0.975),
+                legend.text.align = 0,
+                strip.text.y = element_text(hjust = 1, size = 13, face = "plain", colour = "black"), 
+                plot.margin = (unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+  
+  
+  if(!is.null(split.by)) p = p + facet_grid("split.by~.", drop = FALSE)
+  
   # remove background if specified in blank.background argument
-
+  
   if(blank.background){
-
+    
     p = p + theme(panel.background = element_blank())
-
+    
   } else {
-
+    
     NULL
-
+    
   }
-
+  
   return(p)
-
-}
+  
+  }

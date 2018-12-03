@@ -55,6 +55,7 @@ age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = NULL,
 # age sex pyramid with facet
 
 age_sex_pyramid(data, age.grp.col = "age.grp", sex.col = "sex", split.by = "status")
+
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)

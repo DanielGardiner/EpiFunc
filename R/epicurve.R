@@ -3,7 +3,7 @@
 #' @import ggplot2
 #' @import ISOweek
 #' @import scales
-#' @author Daniel Gardiner (daniel.gardiner@phe.gov.uk)
+#' @author Daniel Gardiner (daniel.gardiner@@phe.gov.uk)
 #'
 #' @param x a data.frame
 #' @param date.col a character specifying the column containing dates
@@ -25,7 +25,6 @@
 #' @param na.rm a logical  specifying if missing dates should be removed from the epicurve
 #'
 #' @return an epicurve
-#' @export
 #'
 #' @examples
 #' # set dummy data
@@ -104,244 +103,249 @@
 #'          xlab="Month", ylab="Count",
 #'          fill.by.legend.title = NULL, shade.by.legend.title = NULL, angle=0,
 #'          col.pal=7, label.breaks = 0, epi.squares = TRUE, na.rm = TRUE)
-epicurve = function(x, date.col, time.period, fill.by=NULL, split.by=NULL, shade.by=NULL,
-                    start.at=NULL, stop.at=NULL, xlab=NULL, ylab="Count",
+#'          
+#' @export
+epicurve <- function(x, date.col, time.period, fill.by = NULL, split.by = NULL, shade.by = NULL,
+                    start.at = NULL, stop.at = NULL, xlab = NULL, ylab = "Number of cases",
                     fill.by.legend.title = NULL, shade.by.legend.title = NULL,
-                    angle=0, col.pal=1, label.breaks =0, epi.squares = TRUE,
+                    angle = 0, col.pal = 1, label.breaks = 0, epi.squares = TRUE,
                     blank.background = FALSE, na.rm = FALSE) {
-
+  
   # make sure x is a data.frame
-
+  
   x = as.data.frame(x)
-
+  
   # check values supplied to col.pal and time.period arguments
-
+  
   if(!(col.pal == "phe" | (col.pal >= 0 & col.pal <= 8))) {
-
+    
     col.pal = "phe"
-
+    
     warning("col.pal must either be an integer from 1 to 8 or 'phe',
             setting col.pal='phe'")
   }
-
+  
   if(!(time.period %in% c("day", "year", "month", "quarter", "year.month", "year.quarter", "iso.year", "iso.week", "iso.year.week", "use.date.col.as.is"))){
     stop("time.period must be either: day, year, quarter, month, year.quarter, year.month, iso.year, iso.week, iso.year.week, use.date.col.as.is")
   }
-
+  
   ##############################################################################
   # Define factor column (date.col.temp) to be used along the x-axis
   #
   # if time.period argument is use.date.col.as.is then use date.col along the x-axis
   # otherwise convert the date provided in date.col to the time period specified
   # in the time.period argument
-
+  
   if(time.period == "use.date.col.as.is"){
-
+    
     x$date.col.temp = x[, date.col]
-
+    
   } else {
-
+    
     # load get.dates function
-
+    
     get.dates = function(x){
-
+      
       if(class(x) == "Date"){
-
+        
         NULL
-
+        
       } else {
-
+        
         stop("x is not a date")
       }
-
+      
       df = data.frame(day = as.character(x),
                       year = format(x, "%Y"),
                       month = format(x, "%m"))
-
+      
       df$year.month = paste0(df$year, df$month)
-
+      
       df$iso.year = sapply(strsplit(ISOweek(x), "-W"), function(x) x[1])
-
+      
       df$iso.week = sapply(strsplit(ISOweek(x), "-W"), function(x) x[2])
-
+      
       df$iso.year.week = gsub("-W", "", ISOweek(x))
-
+      
       df$quarter = NA
-
+      
       df$quarter[!is.na(df$day)] = sprintf("%02d", ceiling(as.numeric(as.character(df$month[!is.na(df$day)]))/3))
-
+      
       df$year.quarter = paste0(df$year, df$quarter)
-
+      
       df[is.na(df$day), ] = NA
-
+      
       df
     }
-
+    
     # append the get.dates data.frame to the data.frame provided
-
+    
     x = data.frame(x, get.dates(x[, date.col]))
-
-
+    
+    
     # create a new factor column for the x-axis (levels of the factor contain
     # dates ranging from start.at to stop.at)
-
+    
     start.at = as.Date(start.at)
-
+    
     stop.at = as.Date(stop.at)
-
+    
     all.dates = get.dates(seq(start.at, stop.at, 1))
-
+    
     all.dates = unique(all.dates[, time.period])
-
+    
     x$date.col.temp = factor(x[, time.period],
                              levels = all.dates)
-
-
+    
+    
     # recode dates that fall outside of start.at/stop.at to NA
-
+    
     x[!(as.character(x[, date.col]) %in%
           as.character(get.dates(seq(start.at, stop.at, 1))$day)), "date.col.temp"] = NA
-
+    
     ## REMOVE MISSING DATES ##
-
+    
     message(paste(sum(is.na(x$date.col.temp)), "rows have missing dates OR dates outside of the start/stop period"))
-
+    
     if(na.rm) x = x[!is.na(x$date.col.temp), ]
-
-
+    
+    
     # order the levels of the date.col.temp column
-
+    
     x$date.col.temp = factor(x$date.col.temp,
                              levels = sort(levels(x$date.col.temp)))
-
+    
   }
   # we have now defined the factor column (date.col.temp) to be used along the x-axis
   ##############################################################################
-
+  
   # order data for plotting
-
+  
   if(!is.null(fill.by) & !is.null(shade.by)){
-
+    
     x = x[order(x[, fill.by], x[, shade.by]), ]
-
+    
   } else if(!is.null(fill.by)){
-
+    
     x = x[order(x[, fill.by]), ]
-
+    
   } else if(!is.null(shade.by)){
-
+    
     x = x[order(x[, shade.by]), ]
-
+    
   } else{
-
+    
     NULL
-
+    
   }
-
+  
   # create blocks column (this is to allow for epi squares to be added)
-
+  
   x$blocks = 1:nrow(x)
-
+  
   ##############################################################################
   # generate plot
-
+  
   # generate main body of plot
-
+  
   p = ggplot(x)
-
+  
   # add geom_bar layer with either epi-squares  or no epi-squares
-
+  
   if(epi.squares){
-
-    p = p + geom_bar(aes_string(x="date.col.temp", fill=fill.by, alpha=shade.by, group = "blocks"),
+    
+    p = p + geom_bar(aes_string(x = "date.col.temp", fill = fill.by, alpha = shade.by, group = "blocks"),
                      colour = "black")
-
+    
   } else {
-
-    p = p + geom_bar(aes_string(x="date.col.temp", fill=fill.by, alpha=shade.by),
+    
+    p = p + geom_bar(aes_string(x = "date.col.temp", fill = fill.by, alpha = shade.by),
                      colour = "black")
-
+    
   }
-
+  
   # add labs
-
+  
   p = p + labs(x = xlab, y = ylab)
-
+  
   # add x-axis label breaks
-
+  
   p = p + scale_x_discrete(breaks = levels(x$date.col.temp)[c(T, rep(F, label.breaks))],
-                           drop=FALSE)
-
+                           drop = FALSE)
+  
   # format y-axis breaks
-
+  
   p = p + scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1)*1.1)))),
                              expand = c(0,0))
-
+  
   # add a solid line running across the bottom of the figure
-
+  
   p = p + geom_hline(aes(yintercept = 0))
-
+  
   # add theme aesthetics
-
-  p = p + theme(title = element_text(size = 11, colour = "black", face="bold"),
-                axis.text.x = element_text(angle = angle, vjust = .5, size = 10,
-                                           colour = "black"),
-                axis.text.y = element_text(hjust = 1, size = 9,
-                                           colour = "black"),
-                legend.text= element_text(hjust = 1, size = 11,
-                                          colour = "black", face="bold"),
-                axis.title = element_text(size=16, face="bold"),
-                strip.text.y = element_text(hjust = 1, size = 16,
-                                            colour = "black", face="bold"),
-                legend.position="right")
-
+  
+  p = p + theme(title = element_text(size = 11, colour = "black", face = "bold"),
+                axis.title.x = element_text(size = 13, face = "bold", margin = margin(t = 20, r = 0, b = 0, l = 0)),
+                axis.title.y = element_text(size = 13, face = "bold", margin = margin(t = 0, r = 20, b = 0, l = 0)),
+                axis.text.x = element_text(angle = angle, hjust = 0.5, vjust = 0, size = 11, face = "plain", colour = "black"),
+                axis.text.y = element_text(hjust = 0, vjust = 0.5, size = 11, face = "plain", colour = "black"),
+                legend.title = element_text(size = 11, face = "bold", colour = "black"),
+                legend.text= element_text(hjust = 1, size = 11, face = "plain", colour = "black"),
+                legend.position = "right",
+                legend.justification = c(0.018,0.975),
+                legend.text.align = 0,
+                strip.text.y = element_text(hjust = 1, size = 13, colour = "black", face = "bold"), 
+                plot.margin = (unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+  
+  
   # remove background if specified in blank.background argument
-
-  if(blank.background){
-
+  
+  if (blank.background) {
+    
     p = p + theme(panel.background = element_blank())
-
+    
   } else {
-
+    
     NULL
-
+    
   }
-
+  
   # add labels for the fill.by and shade.by legends
-
+  
   p = p + labs(fill = fill.by.legend.title,
                alpha = shade.by.legend.title)
-
+  
   # specify a range for the shady.by level
-
+  
   p = p + scale_alpha_discrete(range = c(0.35, 1))
-
+  
   # facet using split.by
-
-  if(!is.null(split.by)) p = p + facet_grid(paste(split.by, ".", sep = "~"),
+  
+  if (!is.null(split.by)) p = p + facet_grid(paste(split.by, ".", sep = "~"),
                                             drop = FALSE)
-
+  
   # add the phe colour palette or a generic colour palette
-
-  if(col.pal == "phe"){
-
+  
+  if (col.pal == "phe") {
+    
     phe.cols = c("#822433", "#00B092", "#002776", "#EAAB00", "#8CB8C6",
                  "#E9994A",  "#00A551", "#A4AEB5", "#00549F", "#DAD7CB")
-
+    
     p = p + scale_fill_manual(values = phe.cols, drop = FALSE)
-
-  } else if(!is.null(col.pal)){
-
+    
+  } else if (!is.null(col.pal)) {
+    
     p = p + scale_fill_brewer(type = "qual",
                               palette = col.pal, drop = FALSE)
-
+    
   } else {
-
+    
     NULL
-
+    
   }
-
+  
   # return the final output
-
+  
   p
-}
+  
+  }

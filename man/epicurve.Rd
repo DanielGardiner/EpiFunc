@@ -6,7 +6,7 @@
 \usage{
 epicurve(x, date.col, time.period, fill.by = NULL, split.by = NULL,
   shade.by = NULL, start.at = NULL, stop.at = NULL, xlab = NULL,
-  ylab = "Count", fill.by.legend.title = NULL,
+  ylab = "Number of cases", fill.by.legend.title = NULL,
   shade.by.legend.title = NULL, angle = 0, col.pal = 1,
   label.breaks = 0, epi.squares = TRUE, blank.background = FALSE,
   na.rm = FALSE)
@@ -131,6 +131,7 @@ epicurve(data, date.col = "dates", time.period = "month",
          xlab="Month", ylab="Count",
          fill.by.legend.title = NULL, shade.by.legend.title = NULL, angle=0,
          col.pal=7, label.breaks = 0, epi.squares = TRUE, na.rm = TRUE)
+         
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
