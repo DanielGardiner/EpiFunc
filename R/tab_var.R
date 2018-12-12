@@ -1,4 +1,4 @@
-#' Tabulate 1 variable
+#' Tabulate a variable
 #'
 #' @import tidyverse
 #' @import stringr

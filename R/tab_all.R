@@ -1,4 +1,4 @@
-#' Tabulate each variable separately
+#' Tabulate all variables
 #'
 #' @import tidyverse
 #' @author Daniel Gardiner (daniel.gardiner@phe.gov.uk)

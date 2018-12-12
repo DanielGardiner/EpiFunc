@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_var.R
 \name{tab_var}
 \alias{tab_var}
-\title{Tabulate 1 variable}
+\title{Tabulate a variable}
 \usage{
 tab_var(data, var = NULL, by = NULL, complete = FALSE,
   arrange.factor.by = "value", show.percentage = "column",
@@ -31,7 +31,7 @@ tab_var(data, var = NULL, by = NULL, complete = FALSE,
 \item{plotit}{a logical specifying whether to plot the output}
 }
 \description{
-Tabulate 1 variable
+Tabulate a variable
 }
 \examples{
 # set dummy data

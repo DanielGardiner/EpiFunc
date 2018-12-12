@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_all.R
 \name{tab_all}
 \alias{tab_all}
-\title{Tabulate each variable separately}
+\title{Tabulate all variables}
 \usage{
 tab_all(data, var = NULL, by = NULL, complete = FALSE,
   arrange.factor.by = "value", show.percentage = "column",
@@ -33,7 +33,7 @@ tab_all(data, var = NULL, by = NULL, complete = FALSE,
 \item{plotit}{a logical specifying whether to plot the output}
 }
 \description{
-Tabulate each variable separately
+Tabulate all variables
 }
 \examples{
 
