@@ -24,15 +24,16 @@
 #'
 #' data = data.frame(onset.date = sample(seq(as.Date("2017-01-01"), as.Date("2018-06-01"), 1), 200, replace = TRUE),
 #'                   sex = factor(c("M", "M", "F", NA, NA), c("F", "M", "Unk")),
+#'                   age = sample(c(0:100), 200, replace = TRUE),
 #'                   conf = sample(c("Confirmed", "Probable", "Probable"), 200, replace = TRUE),
 #'                   status = sample(c("Student", "Staff", NA), 200, replace = TRUE),
 #'                   geog = sample(c("South", "North", NA), 200, replace = TRUE))
 #'
 #' # apply function
 #'
-#' tab_all(data, var = c("sex", "onset.date", "geog"))
+#' tab_all(data, var = c("sex", "age", "onset.date", "geog"))
 #'
-#' tab_all(data, var = c("sex", "onset.date", "geog"), by = "conf")
+#' tab_all(data, var = c("sex", "age", "onset.date", "geog"), by = "conf")
 #'
 #' # using dplyr syntax
 #'
