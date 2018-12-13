@@ -284,7 +284,7 @@ tab_var = function(data,
     } else {
 
       temp = temp %>%
-        mutate(.Total2 = str_split(.Total, " ", simplify = TRUE)[ ,1]) %>%
+        mutate(.Total2 = as.numeric(str_split(.Total, " ", simplify = TRUE)[ ,1])) %>%
         arrange(desc(.Total2)) %>%
         select(-.Total2)
 
@@ -405,8 +405,10 @@ tab_var = function(data,
       summarise(n.valid = sum(!is.na(.var)),
                 n.NA = sum(is.na(.var)),
                 Earliest = min(.var, na.rm = TRUE),
+                Lower_Qu = summary(.var, na.rm = TRUE)[2],
                 Median = median(.var, na.rm = TRUE),
                 Mean = mean(.var, na.rm = TRUE),
+                Upper_Qu = summary(.var, na.rm = TRUE)[5],
                 Latest = max(.var, na.rm = TRUE)) %>%
       t() %>%
       data.frame() %>%
@@ -431,8 +433,10 @@ tab_var = function(data,
         summarise(n.valid = sum(!is.na(.var)),
                   n.NA = sum(is.na(.var)),
                   Earliest = min(.var, na.rm = TRUE),
+                  Lower_Qu = summary(.var, na.rm = TRUE)[2],
                   Median = median(.var, na.rm = TRUE),
                   Mean = mean(.var, na.rm = TRUE),
+                  Upper_Qu = summary(.var, na.rm = TRUE)[5],
                   Latest = max(.var, na.rm = TRUE)) %>%
         t() %>%
         as.character()
@@ -465,6 +469,11 @@ tab_var = function(data,
       p = data %>%
         ggplot(aes(x = .by, y = .var)) +
         geom_boxplot()
+
+    } else {
+
+      temp = temp %>%
+        filter(!(.by %in% c("Lower_Qu", "Upper_Qu")))
 
     }
 
