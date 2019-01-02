@@ -4,25 +4,32 @@
 \alias{summarise_na}
 \title{Summarise NA values}
 \usage{
-summarise_na(data, plotit = FALSE)
+summarise_na(data, arrange.by.value = TRUE, plotit = FALSE)
 }
 \arguments{
 \item{data}{a data.frame}
+
+\item{arrange.by.value}{a logical specifying whether to arrange by value}
+
+\item{plotit}{a logical specifying whether to plot the output}
 }
 \value{
-a data.frame
+either (1) a data.frame or (2) a list including a data.frame and a ggplot figure
 }
 \description{
 Summarise NA values
 }
 \examples{
-data = data.frame(geog = c("A", "B", "C", "D", NA, "E"),
-                  count = c(43, 21, 19, 44, NA, NA),
-                  rate = c(1.4, 2.1, 2.0, 3.3, 4.1, 1.0))
 
-summarise_na(data, plotit = TRUE)
+data = data.frame(geog = c("A", "B", "C", "D", NA, "E", "F", NA),
+                  count = c(43, 21, 19, 44, NA, NA, 11, NA),
+                  rate = c(1.4, 2.1, 2.0, 3.3, 4.1, 1.0, 3.1, 0.4))
 
 summarise_na(data)
+
+summarise_na(data, arrange.by.value = FALSE)
+
+summarise_na(data, plotit = TRUE)
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)

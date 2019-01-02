@@ -14,6 +14,7 @@
 #' @param n.decimals a numeric specifying the number of decimal places to show
 #' @param trunc.length a numeric specifying the maximum character length to be shown in the output
 #' @param plotit a logical specifying whether to plot the output
+#' @return either (1) a data.frame or (2) a list including a data.frame and a ggplot figure
 #'
 #' @export
 #' @examples
@@ -135,7 +136,7 @@ tab_var = function(data,
     # produce raw table
 
     temp = data[, c(".var", ".by")] %>%
-      table(exclude = FALSE) %>%
+      table(useNA = "always") %>%
       data.frame() %>%
       spread(.by, Freq)
 

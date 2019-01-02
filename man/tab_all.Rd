@@ -32,6 +32,9 @@ tab_all(data, var = NULL, by = NULL, complete = FALSE,
 
 \item{plotit}{a logical specifying whether to plot the output}
 }
+\value{
+either (1) a data.frame or (2) a list including a data.frame and a ggplot figure
+}
 \description{
 Tabulate all variables
 }
