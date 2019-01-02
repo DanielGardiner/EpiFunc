@@ -30,7 +30,7 @@
 #'
 #' # apply function
 #'
-#' tab_var(data, var = "sex")
+#'tab_var(data, var = "sex")
 #'
 #' # using dplyr syntax
 #'
@@ -136,7 +136,7 @@ tab_var = function(data,
     # produce raw table
 
     temp = data[, c(".var", ".by")] %>%
-      table(useNA = "always") %>%
+      table(useNA = "ifany") %>%
       data.frame() %>%
       spread(.by, Freq)
 
