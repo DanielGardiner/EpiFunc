@@ -36,7 +36,7 @@ tab_stack_values(data, cols = c("pizza", "pasta", "salad"))
 
 data \%>\%
   select(pizza, pasta, salad) \%>\%
-  tab_stack_values() 
+  tab_stack_values()
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
