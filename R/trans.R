@@ -24,6 +24,16 @@ trans = function(data){
 
   temp = temp[-1, ]
 
+  temp = temp %>%
+    data.frame()
+
+  for(i in 1:ncol(temp)){
+
+    attr(temp[, i], "names") = NULL
+
+  }
+
   temp
+
 }
 
