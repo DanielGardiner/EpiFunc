@@ -4,12 +4,12 @@
 \alias{epicurve}
 \title{Create epicurve}
 \usage{
-epicurve(x, date.col, time.period, fill.by = NULL, split.by = NULL,
-  shade.by = NULL, start.at = NULL, stop.at = NULL, xlab = NULL,
+epicurve(x, date.col, time.period = NULL, start.at = NULL, stop.at = NULL,
+  fill.by = NULL, split.by = NULL, shade.by = NULL, xlab = NULL,
   ylab = "Number of cases", fill.by.legend.title = NULL,
-  shade.by.legend.title = NULL, angle = 0, col.pal = 1,
-  label.breaks = 0, epi.squares = TRUE, blank.background = FALSE,
-  na.rm = FALSE)
+  shade.by.legend.title = NULL, angle = 90, col.pal = "phe",
+  label.breaks = 0, epi.squares = TRUE, blank.background = TRUE,
+  na.rm = TRUE)
 }
 \arguments{
 \item{x}{a data.frame}
@@ -18,15 +18,15 @@ epicurve(x, date.col, time.period, fill.by = NULL, split.by = NULL,
 
 \item{time.period}{a character of the desired time period for the epicurve, this can either be day, year, month, year.month, iso.year, iso.week, iso.year.week, use.date.col.as.is NOTE: if time.period = use.date.col.as.is the date.col will be treated as a factor and will be used as the x-axis}
 
+\item{start.at}{a character in the format "yyyy-mm-dd" to specify the start date for the epicurve}
+
+\item{stop.at}{a character in the format "yyyy-mm-dd" to specify the stop date for the epicurve}
+
 \item{fill.by}{a character specifying the column to stratify by using colour}
 
 \item{split.by}{a character specifying the column to facet by}
 
 \item{shade.by}{a character specifying the column to stratify by using shading}
-
-\item{start.at}{a character in the format "yyyy-mm-dd" to specify the start date for the epicurve}
-
-\item{stop.at}{a character in the format "yyyy-mm-dd" to specify the stop date for the epicurve}
 
 \item{xlab}{a character specifying the x-axis label for the epicurve}
 
@@ -64,74 +64,89 @@ data = data.frame(dates = sample(seq(as.Date('2014-01-01'), as.Date('2016-04-01'
                   conf = sample(c("Confirmed", "Probable", "possible"), 200, replace = TRUE),
                   status = sample(c("Student", "Staff"), 200, replace = TRUE))
 
+
+# use function
+
+epicurve(data,
+         date.col = "dates")
+
+epicurve(data,
+         date.col = "dates",
+         start.at = "2015-01-01",
+         stop.at = "2016-05-15")
+
+epicurve(data,
+         date.col = "dates",
+         start.at = "2015-01-01",
+         stop.at = "2016-05-15",
+         time.period = "iso.year.week",
+         label.breaks = 2)
+
+epicurve(data,
+         date.col = "dates",
+         time.period = "month",
+         xlab = "Month",
+         angle = 0)
+
+epicurve(data,
+         date.col = "dates",
+         time.period = "month",
+         shade.by = "sex",
+         xlab = "Month",
+         angle = 0)
+
+epicurve(data,
+         date.col = "dates",
+         time.period = "month",
+         fill.by = "sex",
+         xlab = "month",
+         angle = 0)
+
+epicurve(data,
+         date.col = "dates",
+         fill.by = "conf",
+         split.by = "sex")
+
+epicurve(data,
+         date.col = "dates",
+         time.period = "month",
+         start.at = "2014-01-01",
+         stop.at = "2016-04-20",
+         fill.by = "sex",
+         split.by = NULL,
+         shade.by = "conf",
+         xlab=NULL,
+         ylab="Count",
+         fill.by.legend.title = "Sex",
+         shade.by.legend.title = NULL,
+         angle = 0 ,
+         col.pal = 6,
+         label.breaks = 0,
+         epi.squares = FALSE,
+         na.rm = TRUE)
+
 data$dates.year.month = factor(format(data$dates, "\%Y_\%m"),
                                levels = unique(format(seq(min(data$dates),
                                                           max(data$dates), 1), "\%Y_\%m")))
 
-# use function
-
-epicurve(data, date.col = "dates", time.period = "iso.year.week",
-         fill.by="sex", split.by=NULL, shade.by=NULL,
-         start.at = "2014-08-01", stop.at = "2015-06-28",
-         xlab="Year week", ylab="Count",
-         fill.by.legend.title = "Sex", shade.by.legend.title = NULL, angle=90,
-         col.pal="phe", label.breaks = 1, epi.squares = TRUE, blank.background = TRUE,
+epicurve(x = data,
+         date.col = "dates.year.month",
+         time.period = "use.date.col.as.is",
+         start.at = "2015-02-01",
+         stop.at = "2015-06-22",
+         fill.by ="status",
+         split.by = NULL,
+         shade.by = NULL,
+         xlab = "Year_week",
+         ylab="Count",
+         fill.by.legend.title = "",
+         shade.by.legend.title = NULL,
+         angle = 90,
+         col.pal = 1,
+         label.breaks = 0,
+         epi.squares = TRUE,
          na.rm = TRUE)
 
-epicurve(x = data, date.col = "dates.year.month", time.period = "use.date.col.as.is",
-         fill.by="status", split.by=NULL, shade.by=NULL,
-         start.at = "2015-02-01", stop.at = "2015-06-22",
-         xlab="Year_week", ylab="Count",
-         fill.by.legend.title = "", shade.by.legend.title = NULL, angle=90,
-         col.pal=1, label.breaks = 0, epi.squares = FALSE, na.rm = TRUE)
-
-epicurve(data, date.col = "dates", time.period = "year.quarter",
-         fill.by="sex", split.by=NULL, shade.by=NULL,
-         start.at = "2014-01-01", stop.at = "2015-06-22",
-        xlab=NULL, ylab="Count",
-         fill.by.legend.title = NULL, shade.by.legend.title = NULL, angle=90,
-         col.pal=8, label.breaks = 0, epi.squares = FALSE, na.rm = TRUE)
-
-epicurve(data, date.col = "dates", time.period = "year.month",
-         fill.by="sex", split.by=NULL, shade.by=NULL,
-         start.at = "2014-01-01", stop.at = "2016-01-31",
-         xlab=NULL, ylab="Count",
-         fill.by.legend.title = "Sex", shade.by.legend.title = NULL, angle=90,
-         col.pal=2, label.breaks = 0, epi.squares = FALSE, na.rm = FALSE)
-
-epicurve(data, date.col = "dates", time.period = "day",
-         fill.by="sex", split.by=NULL, shade.by=NULL,
-         start.at = "2014-01-01", stop.at = "2014-02-19",
-         xlab=NULL, ylab="Count", fill.by.legend.title = NULL, angle=90,
-         col.pal=4, label.breaks = 1, epi.squares = FALSE, na.rm = TRUE)
-
-epicurve(data, date.col = "dates.year.month", time.period = "use.date.col.as.is",
-         fill.by="sex", split.by=NULL, shade.by=NULL,
-         start.at = "2014-01-01", stop.at = "2014-02-19",
-         xlab=NULL, ylab="Count", fill.by.legend.title = NULL, angle=90,
-         col.pal=4, label.breaks = 0, epi.squares = FALSE, na.rm = TRUE)
-
-epicurve(data, date.col = "dates", time.period = "month",
-         fill.by="sex", split.by=NULL, shade.by="conf",
-         start.at = "2014-01-01", stop.at = "2016-04-20",
-         xlab=NULL, ylab="Count",
-         fill.by.legend.title = NULL, shade.by.legend.title = NULL, angle=0,
-         col.pal=6, label.breaks = 0, epi.squares = FALSE, na.rm = TRUE)
-
-epicurve(data, date.col = "dates", time.period = "month",
-         fill.by="conf", split.by="conf", shade.by="sex",
-         start.at = "2014-01-01", stop.at = "2016-04-20",
-         xlab=NULL, ylab="Count",
-         fill.by.legend.title = "Confirmed status", shade.by.legend.title = "Sex",
-         angle=0, col.pal="phe", label.breaks = 0, epi.squares = TRUE, na.rm = TRUE)
-
-epicurve(data, date.col = "dates", time.period = "month",
-         fill.by="sex", split.by="conf", shade.by=NULL,
-        start.at = "2014-01-01", stop.at = "2016-04-20",
-         xlab="Month", ylab="Count",
-         fill.by.legend.title = NULL, shade.by.legend.title = NULL, angle=0,
-         col.pal=7, label.breaks = 0, epi.squares = TRUE, na.rm = TRUE)
-         
 }
 \author{
 Daniel Gardiner (daniel.gardiner@phe.gov.uk)
