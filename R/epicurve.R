@@ -336,6 +336,20 @@ epicurve <- function(x,
 
   }
 
+  # add dummy fill.by column if fill.by = NULL
+
+  if(is.null(fill.by)){
+
+    fill.by = ".dummy"
+
+    x$.dummy = "dummy"
+
+  } else {
+
+    NULL
+
+  }
+
   # create blocks column (this is to allow for epi squares to be added)
 
   x$blocks = 1:nrow(x)
@@ -439,6 +453,17 @@ epicurve <- function(x,
 
     NULL
 
+  }
+
+  # remove dummy legend if fill.by = NULL
+
+  if(fill.by == ".dummy"){
+
+    p = p + theme(legend.position = "none")
+
+  } else {
+
+    NULL
   }
 
   # return the final output

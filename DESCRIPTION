@@ -7,12 +7,12 @@ License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Imports: 
     scales,
     ggplot2,
     reshape2,
     dplyr,
+    tidyverse,
     ISOweek,
-    stringr,
-    tidyverse
+    stringr

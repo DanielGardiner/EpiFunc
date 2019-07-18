@@ -4,9 +4,9 @@
 \alias{tab_1var}
 \title{Tabulate 1 variable}
 \usage{
-tab_1var(data, var = NULL, complete = FALSE, arrange.factor.by = "value",
-  show.percentage = TRUE, n.decimals = 0, include.na.percentage = TRUE,
-  include.total = TRUE)
+tab_1var(data, var = NULL, complete = FALSE,
+  arrange.factor.by = "value", show.percentage = TRUE,
+  n.decimals = 0, include.na.percentage = TRUE, include.total = TRUE)
 }
 \arguments{
 \item{data}{a data.frame}

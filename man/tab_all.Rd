@@ -6,8 +6,8 @@
 \usage{
 tab_all(data, var = NULL, by = NULL, complete = FALSE,
   arrange.factor.by = "value", show.percentage = "column",
-  show.na.percentage = TRUE, row.break.value = " ", trunc.length = 60,
-  n.decimals = 0, plotit = FALSE)
+  show.na.percentage = TRUE, row.break.value = " ",
+  trunc.length = 60, n.decimals = 0, plotit = FALSE)
 }
 \arguments{
 \item{data}{a data.frame}

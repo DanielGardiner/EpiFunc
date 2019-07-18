@@ -4,9 +4,9 @@
 \alias{epicurve}
 \title{Create epicurve}
 \usage{
-epicurve(x, date.col, time.period = NULL, start.at = NULL, stop.at = NULL,
-  fill.by = NULL, split.by = NULL, shade.by = NULL, xlab = NULL,
-  ylab = "Number of cases", fill.by.legend.title = NULL,
+epicurve(x, date.col, time.period = NULL, start.at = NULL,
+  stop.at = NULL, fill.by = NULL, split.by = NULL, shade.by = NULL,
+  xlab = NULL, ylab = "Number of cases", fill.by.legend.title = NULL,
   shade.by.legend.title = NULL, angle = 90, col.pal = "phe",
   label.breaks = 0, epi.squares = TRUE, blank.background = TRUE,
   na.rm = TRUE)
