@@ -26,7 +26,6 @@ explode_variable = function(data,
                             vars,
                             break.value = ", "){
 
-  library(EpiFunc)
   # create dummy date column
 
   data$.id = 1:nrow(data)
@@ -39,7 +38,7 @@ explode_variable = function(data,
 
     new.cols = paste0(".col",
                       1:ncol(str_split(data[, vars[i]],
-                                       ", ",
+                                       break.value,
                                        simplify = TRUE)))
 
     # expand variable into seperate variables
